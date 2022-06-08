@@ -10,7 +10,10 @@ class Command(BaseCommand):
 		parser.add_argument(
 			"--create-demodata", help="Create Demo data from json files in the enterd path"
 		)
-		return 
+		parser.add_argument(
+			"--run-server", help="Run server on the giving IP:PORT after finishing the command"
+		)
+		return
 
 	def handle(self, *args, **options):
 		for file_name in glob.glob("*/migrations/[!__init__.py]*", recursive=True):
@@ -24,4 +27,9 @@ class Command(BaseCommand):
 			for file_name in glob.glob(f"demo_data/*", recursive=True):
 				file_path = str(Path(file_name))
 				subprocess.run(["python", "manage.py", "loaddata", file_path])
-			
+		if options.get("run_server"):
+			ip_port = options["run_server"]
+			try:
+				subprocess.run(["python", "manage.py", "runserver", ip_port])
+			except KeyboardInterrupt:
+				return
