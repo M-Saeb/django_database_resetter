@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class DjangoAppResetdatabaseConfig(AppConfig):
+class DjangoDatabaseResetterConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'django_app_resetdatabase'
+    name = 'django_database_resetter'
